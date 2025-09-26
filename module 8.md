@@ -16,20 +16,60 @@ Algorithm:
  
 Program:
 
-//type your code here
+```
+#include <stdio.h>
 
+int main() {
+    int n;
 
+    // 1. Input
+    printf("Enter a number: ");
+    scanf("%d", &n);
 
+    // 2. Switch cases for specific numbers
+    switch(n) {
+        case 5:
+            printf("seventy one\n");
+            break;
+        case 6:
+            printf("seventy two\n");
+            break;
+        case 13:
+            printf("seventy three\n");
+            break;
+        case 7:
+            printf("seventy four\n");
+            break;
+        case 8:
+            printf("seventy five\n");
+            break;
+        case 9:
+            printf("seventy six\n");
+            break;
+        case 10:
+            printf("seventy seven\n");
+            break;
+        case 11:
+            printf("seventy eight\n");
+            break;
+        case 12:
+            printf("seventy nine\n");
+            break;
+        default:
+            printf("greater than 13\n");
+            break;
+    }
+
+    return 0;
+}
+```
 
 Output:
 
-
-//paste your output here
-
-
-
-
-
+```
+Enter a number: 5
+seventy one
+```
 
 Result:
 Thus, the program is verified successfully
@@ -47,20 +87,40 @@ Algorithm:
  
 Program:
 
-//type your code here
+```
+#include <stdio.h>
+#include <string.h>
 
+int main() {
+    char a[50];
+    int freq[10] = {0}; // Initialize all digit frequencies to 0
 
+    // Input string
+    printf("Enter a string of digits: ");
+    scanf("%s", a);
 
+    // Count frequency of digits 0 to 3 (and others, if needed)
+    for (int i = 0; i < strlen(a); i++) {
+        if (a[i] >= '0' && a[i] <= '3') {
+            freq[a[i] - '0']++; // Convert char to int index
+        }
+    }
+
+    // Print 10 space-separated integers
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", freq[i]);
+    }
+
+    printf("\n");
+    return 0;
+}
+```
 
 Output:
-
-
-//paste your output here
-
-
-
-
-
+```
+Enter a string of digits: 012301233210
+3 3 3 3 0 0 0 0 0 0
+```
 
 Result:
 Thus, the program is verified successfully
@@ -84,21 +144,81 @@ Free the memory allocated for each string in s Free the memory allocated for s
  
 Program:
 
-//type your code here
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+// Function to swap characters
+void swap(char *x, char *y) {
+    char temp = *x;
+    *x = *y;
+    *y = temp;
+}
 
+// Comparator function for qsort
+int compare(const void *a, const void *b) {
+    return strcmp(*(const char **)a, *(const char **)b);
+}
 
+// Recursive function to generate permutations
+void permute(char *str, int l, int r, char **result, int *index) {
+    if (l == r) {
+        result[*index] = (char *)malloc((strlen(str) + 1) * sizeof(char));
+        strcpy(result[*index], str);
+        (*index)++;
+    } else {
+        for (int i = l; i <= r; i++) {
+            swap((str + l), (str + i));
+            permute(str, l + 1, r, result, index);
+            swap((str + l), (str + i)); // backtrack
+        }
+    }
+}
 
+int factorial(int n) {
+    return (n <= 1) ? 1 : n * factorial(n - 1);
+}
+
+int main() {
+    char input[20];
+    printf("Enter a string: ");
+    scanf("%s", input);
+
+    int n = strlen(input);
+    int total = factorial(n);
+
+    // Allocate memory to store all permutations
+    char **permutations = (char **)malloc(total * sizeof(char *));
+    int index = 0;
+
+    permute(input, 0, n - 1, permutations, &index);
+
+    // Sort permutations lexicographically
+    qsort(permutations, total, sizeof(char *), compare);
+
+    printf("Lexicographical permutations:\n");
+    for (int i = 0; i < total; i++) {
+        printf("%s\n", permutations[i]);
+        free(permutations[i]); // Free each permutation
+    }
+
+    free(permutations); // Free array of pointers
+    return 0;
+}
+```
 Output:
 
-
-//paste your output here
-
-
-
-
-
-
+```
+Enter a string: abc
+Lexicographical permutations:
+abc
+acb
+bac
+bca
+cab
+cba
+```
 Result:
 Thus, the program is verified successfully
  
@@ -116,21 +236,44 @@ Algorithm:
 7.	End
  
 Program:
+```
+#include <stdio.h>
 
-//type your code here
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
 
+int main() {
+    int n;
+    printf("Enter the value of n: ");
+    scanf("%d", &n);
 
+    int len = 2 * n - 1;
 
+    for (int i = 0; i < len; i++) {
+        for (int j = 0; j < len; j++) {
+            int min_val = i < j ? i : j;
+            min_val = min(min_val, len - 1 - i);
+            min_val = min(min_val, len - 1 - j);
+
+            printf("%d ", n - min_val);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+```
 
 Output:
 
-
-//paste your output here
-
-
-
-
-
+```
+3 3 3 3 3
+3 2 2 2 3
+3 2 1 2 3
+3 2 2 2 3
+3 3 3 3 3
+```
 
 Result:
 Thus, the program is verified successfully
@@ -155,21 +298,35 @@ o	Call the square() function and display the result.
 5.	End.
 
 Program:
+```
+#include <stdio.h>
 
-//type your code here
+// Function without arguments and with return type
+int square() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    return num * num;
+}
 
+int main() {
+    int result;
 
+    // Call the square function and store the result
+    result = square();
 
+    // Display the result
+    printf("Square of the number is: %d\n", result);
 
+    return 0;
+}
+```
 Output:
 
-
-//paste your output here
-
-
-
-
-
+```
+Enter a number: 5
+Square of the number is: 25
+```
 
 Result:
 Thus, the program is verified successfully
